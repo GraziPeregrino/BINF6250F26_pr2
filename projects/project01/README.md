@@ -65,7 +65,5 @@ PR branch.
 ## Other member
 Other members' reflections on the project
 
-Ahmed Salman - This project helped me learn how we are expected to use Github in this class and in the future. I do not have much experience with Github from my previous classes and this is valuable experience for me. Also, getting my programming skills sharpened again after a while of no programming will get me ready. Me and my group met together to understand the assignment better. Some of us did not have a clear idea of what the final dictionary was supposed to look like and we all worked together to understand that and create a plan. Other than that we figured out how to connect Git to our respective IDEs so that we can work more smoothly through the assignment.
-
 # Generative AI Appendix
 Generative AI was not used for this assignment.
