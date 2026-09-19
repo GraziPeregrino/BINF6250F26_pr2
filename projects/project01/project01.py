@@ -1,55 +1,80 @@
 #!/usr/bin/env python
+"""
+Parse a ClinVar VCF file and count diseases linked to rare variants
+(AF_EXAC < 0.0001). Skips diseases labeled not_specified or not_provided.
+"""
+
 from pprint import pprint
-from unittest import skip
 
 
-# Modify this function signature and fill in the details
-def parse_line(line:str):
+def parse_line(line: str):
+    """
+    Takes one line from a VCF file and returns a list of diseases
+    if the variant is rare (AF_EXAC < 0.0001).
 
-    if 'AF_EXAC' in line:
-        info_line = line.split('\t')[7].split(';')
-        af_exac = float(extract_data_from_info(info_line, 'AF_EXAC'))
-        clndn = extract_data_from_info(info_line, 'CLNDN')
-        clndn = clndn.split('|')
-    else:
-        af_exac = 1
-    if af_exac < 0.0001:
-        rare_disease = clndn
-    else:
-        rare_disease = []
+    Args:
+        line (str): a single line from the VCF file
 
-    return rare_disease
+    Returns:
+        list: list of disease names if the variant is rare,
+              empty list if AF_EXAC is missing or not rare
+    """
+    info = line.split("\t")[7]
+
+    # Create a dictionary to hold the key-value pairs from the INFO field
+    info_dict = {}
+    for pair in info.split(";"):
+        key, value = pair.split("=")
+        info_dict[key] = value
+    
+    # Check if the "AF_EXAC" key is present in the info_dict
+    if "AF_EXAC" not in info_dict:
+        return []
+    # Check if the Value of "AF_EXAC" is greater than or equal to 0.0001
+    if float(info_dict["AF_EXAC"]) >= 0.0001:
+        return []   
+    
+    # Create a list of diseases from the "CLNDN" key in the info_dict
+    diseases = info_dict["CLNDN"].split("|")
+
+    # Create a filtered list of diseases
+    filtered_diseases = []
+    for disease in diseases:
+        if disease != "not_provided" and disease != "not_specified":
+            filtered_diseases.append(disease)
+    
+    return filtered_diseases
 
 
+def read_file(file: str):
+    """
+    Reads a VCF file line by line and counts how many times each disease
+    shows up in rare variants.
 
+    Args:
+        file (str): path to the VCF file
 
-
-# Modify this function signature and fill in the details
-def read_file(file_name:str):
-    with open(file_name,"r") as f:
-        disease_dict = {}
+    Returns:
+        dict: dictionary with disease names as keys and their counts as values
+    """
+    # Dictionary initialization for counting diseases
+    tally = {} 
+    # open the file
+    with open(file) as f: 
         for line in f:
-            if line.startswith('#'):
+            if (line.startswith("#")):  # filters out metadata lines
                 continue
-            else:
-                disease_list = parse_line(line)
-                for disease in disease_list:
-                    if disease in disease_dict.keys():
-                        disease_dict[disease] += 1
-                    else:
-                        disease_dict[disease] = 1
-        disease_dict.pop('not_provided')
-        disease_dict.pop('not_specified')
-        return disease_dict
+            diseases = parse_line(line) # List of diseases
 
-def extract_data_from_info(info:list, metadata:str):
-    #Extract the relevant data from the info line given a Metadata requirement such as
-    #AF_EXAC or CLNDN.
+            for disease in diseases: # Counter loop for each disease in list
+                if disease in tally:
+                    tally[disease] += 1
+                else:
+                    tally[disease] = 1
+    return tally         
 
-    values = [data for data in info if metadata in data]
-    clean_data = values[0].split('=')[1]
-    return clean_data
 
 
 if __name__ == "__main__":
     pprint(read_file("clinvar_20190923_short.vcf"))
+    
