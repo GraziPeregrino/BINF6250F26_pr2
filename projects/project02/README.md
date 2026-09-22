@@ -80,16 +80,66 @@ then the recorded output will be as follows and matched the given expected outpu
  ('fish', 'blue'): {'fish': 1},
  ('blue', 'fish'): {'*E*': 1}}
  ```
-3. Generating text from the model
-get_next_word(current_word, markov_model, seed=42)
+3. Generating text from the model –
+Since Markov Models are generative models, we can use the probability states 
+to generate output. 
+```
+def get_next_word(current_word, markov_model, seed=42)
+    Look up the current state's transition dictionary
+    Sum all observed transitions out of this state
+    Build a list of possible next words
+    For each possible next word:
+        Convert raw frequency count into probability (count/total)
+        Append to list of probabilities
+    Randomly draw next word using calculated probability
+    Return chosen word    
+```
+```
+def generate_random_text(markov_model, seed=42)
+    Define start and end tokens
+    Determine model's order (from length of state key)
+    Seed the RNG (reproducibility)
+    Initialize current state with order number of start tokens
+    Repeatedly:
+        Get the next word (get_next_word)
+        If next word is end token:
+            Break out of loop
+        Append generated word
+        Slide window (drop oldest word, add new word)
+    Join collected words into string and return    
+```
+Calling code:
+
 4. "All the Fish" — training on the whole book
+```
+Open the file "data/one_fish_two_fish.txt"
+Initialize empty markov model
+For each line:
+    Strip whitespace
+    If the line is not blank:
+        Update markov model (next word transitions)
+Generate sentence from model (using a seed for reproducibility)    
+```
 5. "Pick Your Poison" — training on Shakespeare's Sonnets
+```
+Open the file "data/sonnets.txt"
+    Read the whole file into one string
+Make a list of sonnet chunks (divided by \n\n)
+Loop through saved sonnet chunks:
+    Strip whitespace
+    Append to list
+Loop through all sonnet chunks:
+    Break sonnet chunks into individual lines (\n)
+    Join them together with whitespace to make lingle-line version
+    Update markov model (next word transitions)
+Print generated random text from markov model
+```
 # Successes
 
 # Struggles
 
 # Personal Reflections
-## Group Leader
+## Group Leader: Maggie Wenger
 
 
 ## Other member: Trang Do 
