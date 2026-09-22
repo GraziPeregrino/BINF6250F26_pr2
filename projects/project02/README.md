@@ -6,7 +6,7 @@ This project implements a Markov chain text model, built up in stages:
 4. Training on a full book ("All the Fish" — Dr. Seuss)
 5. Training on a larger, structurally different text ("Pick Your Poison" — Shakespeare's Sonnets)
 
-A Markov chain models a sequence where each next event depends only on a fixed-size window of recent history (the order), not on anything further back. Here, the "events" are words, and the "history window" is the last order words.
+
 # Pseudocode
 1. First implementation — 1st-order Markov model
 ```
