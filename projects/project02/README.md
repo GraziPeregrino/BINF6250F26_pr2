@@ -34,6 +34,7 @@ def build_markov_model(markov_model, text, order=1)
     Return markov_model
 ```
 Note: we experienced output slightly different from the assignment expected output for this segment. After reviewing carefully, we decided to trust the algorithm's integrity and document the discrepancy in our project02.ipynb file. You will find our code, along with an alternative calling code that would lead to the given expected output in the original assignment. 
+
 3. Generating text from the model –
 Since Markov Models are generative models, we can use the probability states 
 to generate output. 
