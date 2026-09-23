@@ -115,15 +115,22 @@ As a collaborator, I like that we continue to have the opportunity to practice u
 ## Other member: Graziano Peregrino 
 
 - Issue: One of my challenges was making myself comfortable using GitHub workflow to work with collaborations. The learning curve at times seems steep with many functionalities that are not working correctly.
-- What I learned: Since I had issues with conflicts and versions I learned that I need to make sure that all the pieces are getting synced. 
+  
+- What I learned: Since I had issues with conflicts and versions I learned that I need to make sure that all the pieces are getting synced.
+  
 - Next Action: Before any editing, I will confirm that everything is synchronized and that I am working on the correct project branch, check the status and verify that the notebook still runs correctly after the conflict resolution.
 
+
 - Issue: I got some errors while building the  Nth-order Markov order, which I got the `IndexError`, because the last loop continued beyond the last context window.
+  
 -What I learned: I learned the importance of tracing transitions and not assuming anything on the code.
+
 -Next Action: Make sure I will be doing extensive tests on the coding to verify the start, context window, transitions counts, end, and total number of transitions.
 
 - Issue: Adding a seed on the `getting_next_word()` function was more complicated than I expected. I mixed the generators at first which was restarting the random sequence.
+  
 - What I learned: I learned the main fucntionality of a seed and where it needs to be set on the code.
+  
 - Next Action: I will be using only one random-number system consistently and add tests to make sure everything is running correctly.
 
 
@@ -131,11 +138,15 @@ As a collaborator, I like that we continue to have the opportunity to practice u
 
 The appendix entry must contain:
 
-Description of which generative AI was used and its version. Claude - Opus 5
+Description of which generative AI was used and its version. 
+- Claude - Opus 5
+  
 The entire prompt that was used to generate the content. 
-- Can you explain to a bioinformatics graduate student Markov chains and its use on the field and provide some links and resources where I could get more information on the subject?
+- Can you explain to a bioinformatics graduate student Markov chains and its use on the field and provide some links and resources and where I could get more information on the subject?
+
 An explanation of how it was used .
 - To guide our team on the learning process of the subject.
+  
 A justification for why generative AI was used.
 - Since the subject involves math and probabilities it help us to understand the material.
 
