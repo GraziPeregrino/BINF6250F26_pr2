@@ -10,76 +10,30 @@ This project implements a Markov chain text model, built up in stages:
 # Pseudocode
 1. First implementation — 1st-order Markov model
 ```
-Split new_text into a list of words
-Add artificial states for start and end: '*S*' (start marker) to the front, '*E*' (end marker) to the end
-For each consecutive pair (current_word, next_word) in the padded list:
-    If current_word not in markov_model: create empty dict for it
-    Increment markov_model[current_word][next_word]
-Return markov_model
+def build_markov_model(markov_model, new_text)
+    Split new_text into a list of words
+    Add artificial states for start and end: '*S*' (start marker) to the front, '*E*' (end marker) to the end
+    For each consecutive pair (current_word, next_word) in the padded list:
+        If current_word not in markov_model: create empty dict for it
+        Increment markov_model[current_word][next_word]
+    Return markov_model
 ```
-Calling code: 
-```
-markov_model = dict()
-text = "one fish two fish red fish blue fish"
-markov_model = build_markov_model(markov_model, text)
-print (markov_model)
-```
-Recorded output - matched with expected output
-```
-{'*S*': {'one': 1}, 'one': {'fish': 1}, 'fish': {'two': 1, 'red': 1, 'blue': 1, '*E*': 1}, 'two': {'fish': 1}, 'red': {'fish': 1}, 'blue': {'fish': 1}}
-```
+
 2. Generalization — Nth-order Markov model
 Why?
 A 1st-order model only remembers one previous word. Real structure (e.g. codon triplets in DNA, or multi-word phrases in language) often needs more context. The Nth-order model implementation here is a strict superset of the 1st-order model — setting order=1 reproduces the same behavior, just with 1-tuples as keys instead of bare strings.
 ```
-Split text into a list of words
-Pad the front with `order` copies of '*S*', pad the end with one '*E*'
-For i from 0 to (len(words) - order - 1):
-    current_state = tuple of words[i : i+order]   # the last `order` words
-    next_word = words[i + order]
-    If current_state not in markov_model: create empty dict for it
-    Increment markov_model[current_state][next_word]
-Return markov_model
+def build_markov_model(markov_model, text, order=1)
+    Split text into a list of words
+    Pad the front with `order` copies of '*S*', pad the end with one '*E*'
+    For i from 0 to (len(words) - order - 1):
+        current_state = tuple of words[i : i+order]   # the last `order` words
+        next_word = words[i + order]
+        If current_state not in markov_model: create empty dict for it
+        Increment markov_model[current_state][next_word]
+    Return markov_model
 ```
-Calling code: 
-```
-markov_model = dict()
-text = "one fish two fish red fish blue red fish blue"
-markov_model = build_markov_model(markov_model, text, order=2)
-markov_model
-```
-Recorded output: 
-Note ('red', 'fish') → {'blue': 2} — "red fish" is followed by "blue" twice in this particular training sentence, which is why the count is 2 rather than 1.
-```
-{('*S*', '*S*'): {'one': 1},
- ('*S*', 'one'): {'fish': 1},
- ('one', 'fish'): {'two': 1},
- ('fish', 'two'): {'fish': 1},
- ('two', 'fish'): {'red': 1},
- ('fish', 'red'): {'fish': 1},
- ('red', 'fish'): {'blue': 2},
- ('fish', 'blue'): {'red': 1, '*E*': 1},
- ('blue', 'red'): {'fish': 1}}
-```
-Note #2: if we change the calling code to: 
-```
-markov_model = dict()
-text = "one fish two fish red fish blue fish"
-markov_model = build_markov_model(markov_model, text, order=2)
-markov_model
-```
-then the recorded output will be as follows and matched the given expected output: 
-```
-{('*S*', '*S*'): {'one': 1},
- ('*S*', 'one'): {'fish': 1},
- ('one', 'fish'): {'two': 1},
- ('fish', 'two'): {'fish': 1},
- ('two', 'fish'): {'red': 1},
- ('fish', 'red'): {'fish': 1},
- ('red', 'fish'): {'blue': 1},
- ('fish', 'blue'): {'fish': 1},
- ('blue', 'fish'): {'*E*': 1}}
- ```
+
 3. Generating text from the model –
 Since Markov Models are generative models, we can use the probability states 
 to generate output. 
@@ -108,7 +62,6 @@ def generate_random_text(markov_model, seed=42)
         Slide window (drop oldest word, add new word)
     Join collected words into string and return    
 ```
-Calling code:
 
 4. "All the Fish" — training on the whole book
 ```
@@ -136,11 +89,23 @@ Print generated random text from markov model
 ```
 # Successes
 
+- **Understanding Markov CHain Process:** 
+- **Implementing Markov Chain:** 
+- **GitHub:** Overall, we had success with GitHub. We were able to navigate the PR request page, and successfully work collaboratively.
+
 # Struggles
+
+- **Jupyter Notebook Upload:** For some reason, we were having trouble uploading our Jupyter notebook to GitHub at first. It took us removing the file and reuploading it to stop showing up as "invalid".
 
 # Personal Reflections
 ## Group Leader: Maggie Wenger
+Overall this project went way more smoothly than the first one for me. I am definitely starting to get the hang of GitHub
+and managing pull requests in the dedicated PR page. Our team worked really well together, and we were able to provide 
+advice and suggestions for suggested code to each other.
 
+If given more time, something that we could implement would be taking into account the ends of the "paragraphs" in the sonnets.
+It would be interesting to see if that would affect the output of our generated text, and if we could generate sonnets
+with the correct spacing.
 
 ## Other member: Trang Do 
 Other members' reflections on the project
