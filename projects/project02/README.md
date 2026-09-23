@@ -33,7 +33,7 @@ def build_markov_model(markov_model, text, order=1)
         Increment markov_model[current_state][next_word]
     Return markov_model
 ```
-
+Note: we experienced output slightly different from the assignment expected output for this segment. After reviewing carefully, we decided to trust the algorithm's integrity and document the discrepancy in our project02.ipynb file. You will find our code, along with an alternative calling code that would lead to the given expected output in the original assignment. 
 3. Generating text from the model –
 Since Markov Models are generative models, we can use the probability states 
 to generate output. 
@@ -108,7 +108,9 @@ It would be interesting to see if that would affect the output of our generated 
 with the correct spacing.
 
 ## Other member: Trang Do 
-Other members' reflections on the project
+We were able to understand Markov Chain quite thoroughly, I liked that our team member was sharing multiple useful readings that broke down the concept and make it digestible. We were then each worked on our own implementation, shared it with other member in team chat, and were able to offer correction / different ways of thinking and coding and overall learnt from each other. We ended up agreeing and uploading the finalized version on here. 
+As a collaborator, I like that we continue to have the opportunity to practice using Github. It does get easier each time. 
+
 
 
 # Generative AI Appendix
